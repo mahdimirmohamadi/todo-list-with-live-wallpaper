@@ -76,7 +76,7 @@ Array.from(actions.children).forEach(action => {
                     <form id="add">
 						<input class="form-control" name="add" placeholder="Add todo ...">	
 					</form>` //its a "backtick" watch out :D
-                    
+                    createTodos(todos)
                     let add = document.querySelector("#add")
                     add.addEventListener("submit" , e =>{
                         e.preventDefault()
@@ -88,12 +88,28 @@ Array.from(actions.children).forEach(action => {
                         }
                     })
         })
+        // search to-do
     } else if (action.dataset.action == "search") {
         action.addEventListener("click" , e => {
             formWrapper.innerHTML = `
             <form id="search">
 						<input class="form-control" name="search" placeholder="search todos ...">	
 					</form>`
+
+                    let search = document.querySelector("#search")
+                    search.addEventListener("keyup" , e =>{
+                        e.preventDefault()
+                        if (search.search.value){
+                            let filtered_todos = todos.filter(
+                                todo => todo.content.toLowerCase().includes(search.search.value.toLowerCase())
+                                )
+                                createTodos(filtered_todos)
+                        } else {
+                            createTodos(todos)
+
+                        }
+                    
+                    })
         })
-    }
+    }    
 })
