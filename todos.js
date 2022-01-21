@@ -11,9 +11,9 @@ try{
 //set default value if todos == null
 if (!todos) {
     todos = [
-        "shopping",
-        "watch videos",
-        "like videos",
+    {content:"shopping", status: true},
+        {content: "watch videos", status: true},
+       {content:  "like videos", status: true},
     ]
     localStorage.setItem("todos",JSON.stringify(todos))
 }
@@ -27,7 +27,8 @@ function createTodos(todos){
         let li = document.createElement("li")
         li.className = "list-group-item"
         let content = document.createElement("span")
-        content.textContent = todo
+        content.textContent = todo.content
+        content.style.textDecoration = todo.status ?  "initial" : "line-through"
         let deleteBtn = document.createElement("img")
         deleteBtn.src = "media/delete.png"
         deleteBtn.alt = "delete icon"
@@ -39,15 +40,24 @@ function createTodos(todos){
         
         // append li to todosList
         todosList.append(li)
-
+        
+        //add deleteBtn functionality
         deleteBtn.addEventListener("click", e =>{
             todos.splice(index, 1)
+            localStorage.setItem("todos",JSON.stringify(todos))
+            createTodos(todos)
+        })
+
+        //add complete functionality
+        content.addEventListener("click", e =>{
+            todos[index].status = !todos[index].status
             localStorage.setItem("todos",JSON.stringify(todos))
             createTodos(todos)
         })
         
     });
 }
+
 
 
 
