@@ -69,19 +69,30 @@ createTodos(todos)
 let actions = document.querySelector("#actions")
 let formWrapper = document.querySelector("#form-wrapper")
 Array.from(actions.children).forEach(action => {
+    //add todo
     if (action.dataset.action == "add") {
         action.addEventListener("click" , e => {
             formWrapper.innerHTML = `
                     <form id="add">
 						<input class="form-control" name="add" placeholder="Add todo ...">	
 					</form>` //its a "backtick" watch out :D
+                    
+                    let add = document.querySelector("#add")
+                    add.addEventListener("submit" , e =>{
+                        e.preventDefault()
+                        if (add.add.value){
+                            todos.push({content :add.add.value, status:true},)
+                            localStorage.setItem("todos",JSON.stringify(todos))
+                            createTodos(todos)
+                        }
+                    })
         })
     } else if (action.dataset.action == "search") {
         action.addEventListener("click" , e => {
             formWrapper.innerHTML = `
             <form id="search">
 						<input class="form-control" name="search" placeholder="search todos ...">	
-					</form>`//its a "backtick" watch out :D
+					</form>`
         })
     }
 })
