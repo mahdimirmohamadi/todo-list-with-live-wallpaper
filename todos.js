@@ -83,6 +83,7 @@ Array.from(actions.children).forEach(action => {
                         if (add.add.value){
                             todos.push({content :add.add.value, status:true},)
                             localStorage.setItem("todos",JSON.stringify(todos))
+                            add.textContent = ""
                             createTodos(todos)
                         }
                     })
